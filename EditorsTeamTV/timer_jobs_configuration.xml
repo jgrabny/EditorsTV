@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 				version="2.0">
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+    <!-- Jobs definitions-->
+    <job>
+      <name>WindowSwitcherJob</name>
+      <group>TVJobsJobGroup</group>
+      <description>Job  for  window switching</description>
+      <job-type>EditorsTeamTV.Scheduling.WindowSwitcherJob, EditorsTeamTV</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+    <job>
+      <name>GenerateBashJob</name>
+      <group>TVJobsJobGroup</group>
+      <description>Job  for  generating new bash</description>
+      <job-type>EditorsTeamTV.Scheduling.GenerateBashJob, EditorsTeamTV</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+
+    <!-- Triggers definitions-->
+
+    <trigger>
+      <cron>
+        <name>WindowSwitcherTrigger</name>
+        <group>TVJobsGroup</group>
+        <description>Triggers the WindowSwitcherJob.</description>
+        <job-name>WindowSwitcherJob</job-name>
+        <job-group>TVJobsJobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <!-- Trigger the job every 30 seconds -->
+        <cron-expression>0/30 * * * * ?</cron-expression>
+        <!-- Trigger the job every day at 3:00 AM -->
+        <!--<cron-expression>0 0 3 1/1 * ?</cron-expression>-->
+      </cron>
+    </trigger>
+
+    <trigger>
+      <cron>
+        <name>GenerateBashTrigger</name>
+        <group>TVJobsGroup</group>
+        <description>Triggers the GenerateBashJob.</description>
+        <job-name>GenerateBashJob</job-name>
+        <job-group>TVJobsJobGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <!-- Trigger the job every 55 seconds -->
+        <cron-expression>0/55 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+
+  </schedule>
+</job-scheduling-data>
